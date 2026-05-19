@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Amsterdam 2026 — Mamá & yo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B3A5C;
+    --gold: #C9A84C;
+    --gold-light: #F5EDD6;
+    --cream: #FDFAF4;
+    --warm: #F7F2E8;
+    --text: #1A1A1A;
+    --muted: #6B6560;
+    --border: rgba(27,58,92,0.12);
+    --green: #2D6A4F;
+    --green-bg: #EAF4EE;
+    --red: #9B2226;
+    --red-bg: #FDECEA;
+    --orange: #B5480F;
+    --orange-bg: #FEF0E6;
+    --purple: #5C3D8A;
+    --purple-bg: #F0EBF8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto;
+    padding-bottom: 60px;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--navy);
+    color: white;
+    padding: 48px 24px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.15);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .cover-flag { font-size: 40px; margin-bottom: 16px; display: block; }
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: white;
+    margin-bottom: 8px;
+  }
+  .cover-sub {
+    color: var(--gold);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .cover-dates {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.8;
+  }
+  .cover-dates span { color: rgba(255,255,255,0.9); }
+
+  /* ── HOTELS BANNER ── */
+  .hotels-banner {
+    background: var(--gold);
+    padding: 16px 24px;
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .hotel-card {
+    flex: 1;
+    background: white;
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .hotel-card .label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .hotel-card .name { font-size: 13px; font-weight: 500; color: var(--navy); line-height: 1.3; }
+  .hotel-card .dates { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* ── FLIGHTS ── */
+  .flights-section {
+    background: var(--navy);
+    padding: 20px 24px;
+    color: white;
+  }
+  .flights-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .flight-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 13px;
+  }
+  .flight-row:last-child { border-bottom: none; }
+  .flight-code { font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold); font-size: 13px; min-width: 72px; }
+  .flight-route { color: rgba(255,255,255,0.9); flex: 1; }
+  .flight-date { font-size: 11px; color: rgba(255,255,255,0.5); text-align: right; white-space: nowrap; }
+
+  /* ── RESERVATIONS CHECKLIST ── */
+  .reservations {
+    background: white;
+    margin: 0 16px 16px;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid var(--border);
+    margin-top: 16px;
+  }
+  .section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .resv-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .resv-item:last-child { border-bottom: none; }
+  .resv-check {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+  }
+  .resv-check.done { background: var(--green); border-color: var(--green); color: white; font-size: 11px; }
+  .resv-text { flex: 1; color: var(--text); line-height: 1.4; }
+  .resv-text .warn { color: var(--red); font-size: 11px; }
+  .resv-link { color: var(--navy); font-size: 11px; text-decoration: none; display: block; margin-top: 2px; }
+
+  /* ── DAY NAV ── */
+  .day-nav {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .day-nav::-webkit-scrollbar { display: none; }
+  .day-pill {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1.5px solid var(--border);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+    background: white;
+  }
+  .day-pill.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* ── DAY SECTION ── */
+  .day-section { display: none; padding: 0 16px; }
+  .day-section.visible { display: block; }
+
+  .day-header {
+    padding: 20px 0 12px;
+    border-bottom: 2px solid var(--gold);
+    margin-bottom: 16px;
+  }
+  .day-num {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .day-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .day-subtitle { font-size: 13px; color: var(--muted); }
+  .day-neighborhoods {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .nbhd-tag {
+    font-size: 11px;
+    background: var(--gold-light);
+    color: var(--navy);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  /* ── STOP CARDS ── */
+  .stop-card {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .stop-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+    background: var(--warm);
+  }
+  .stop-img-placeholder {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    background: var(--warm);
+  }
+  .stop-body { padding: 14px 14px 12px; }
+  .stop-type-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .stop-type-badge {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .type-desayuno { background: var(--orange-bg); color: var(--orange); }
+  .type-cena { background: var(--green-bg); color: var(--green); }
+  .type-pitstop { background: var(--purple-bg); color: var(--purple); }
+  .type-tour { background: #E8F0FB; color: var(--navy); }
+  .type-tienda { background: #FEF9EC; color: #8B6914; }
+  .type-arquitectura { background: #F0F4FF; color: #3B4DBB; }
+  .type-paseo { background: #F0F4FF; color: #3B4DBB; }
+  .type-museo { background: #F3EDF9; color: var(--purple); }
+  .type-vuelo { background: #EAF4FB; color: #185FA5; }
+  .type-tren { background: #EAF4FB; color: #185FA5; }
+  .type-hotel { background: var(--warm); color: var(--navy); }
+  .type-info { background: var(--warm); color: var(--navy); }
+
+  .stop-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: var(--navy);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .stop-barrio { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+
+  .stop-what {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    padding: 10px 12px;
+    background: var(--warm);
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  .stop-fact {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    padding: 8px 10px;
+    border-left: 2px solid var(--gold);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  .stop-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .stop-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    color: var(--navy);
+    background: white;
+    transition: background 0.1s;
+  }
+  .stop-link:active { background: var(--warm); }
+  .stop-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .stop-link.ig { border-color: #E1306C; color: #E1306C; }
+  .stop-link.maps { border-color: #4285F4; color: #4285F4; }
+  .stop-link.book { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* ── RESERVE ALERT ── */
+  .reserve-alert {
+    background: var(--red-bg);
+    border: 1px solid rgba(155,34,38,0.2);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--red);
+    margin-bottom: 8px;
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+  }
+  .reserve-alert b { font-weight: 500; }
+
+  /* ── TRAIN OPTIONS ── */
+  .train-option {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+  .train-option h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .train-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .train-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--warm);
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 24px 16px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .footer span { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <span class="cover-flag">🇳🇱</span>
+  <div class="cover-title">Ámsterdam<br>2026</div>
+  <div class="cover-sub">Mamá &amp; yo · Guía de viaje</div>
+  <div class="cover-dates">
+    <span>25–27 Mayo</span> · Schiphol → Menorca<br>
+    <span>6–9 Junio</span> · Copenhague → Ámsterdam → CDMX<br>
+    <span>Hotel 1:</span> Kimpton De Witt · <span>Hotel 2:</span> Tivoli Doelen
+  </div>
+</div>
+
+<!-- HOTELS -->
+<div class="hotels-banner">
+  <div class="hotel-card">
+    <div class="label">Estancia 1</div>
+    <div class="name">Kimpton De Witt</div>
+    <div class="dates">25–27 Mayo · Centrum</div>
+  </div>
+  <div class="hotel-card">
+    <div class="label">Estancia 2</div>
+    <div class="name">Tivoli Doelen</div>
+    <div class="dates">6–9 Junio · Grachtengordel</div>
+  </div>
+</div>
+
+<!-- FLIGHTS -->
+<div class="flights-section">
+  <div class="flights-title">✈ Vuelos</div>
+  <div class="flight-row">
+    <div class="flight-code">AM0025</div>
+    <div class="flight-route">CDMX → Amsterdam AMS</div>
+    <div class="flight-date">24 Mayo</div>
+  </div>
+  <div class="flight-row">
+    <div class="flight-code">VY8307</div>
+    <div class="flight-route">AMS → BCN + VY3726 BCN → Menorca</div>
+    <div class="flight-date">27 Mayo</div>
+  </div>
+  <div class="flight-row">
+    <div class="flight-code">—</div>
+    <div class="flight-route">Menorca → BCN → CPH</div>
+    <div class="flight-date">31 Mayo (info pendiente)</div>
+  </div>
+  <div class="flight-row">
+    <div class="flight-code">KL1270</div>
+    <div class="flight-route">CPH → Amsterdam AMS</div>
+    <div class="flight-date">6 Junio</div>
+  </div>
+  <div class="flight-row">
+    <div class="flight-code">AM0026</div>
+    <div class="flight-route">Amsterdam AMS → CDMX</div>
+    <div class="flight-date">9 Junio</div>
+  </div>
+</div>
+
+<!-- RESERVATIONS -->
+<div class="reservations">
+  <div class="section-label">📌 Checklist de Reservaciones</div>
+  <div id="resv-list"></div>
+</div>
+
+<!-- DAY NAV -->
+<div class="day-nav" id="dayNav">
+  <div class="day-pill active" onclick="showDay(0)">D1 · 25 Mayo</div>
+  <div class="day-pill" onclick="showDay(1)">D2 · 26 Mayo</div>
+  <div class="day-pill" onclick="showDay(2)">D3 · 27 Mayo</div>
+  <div class="day-pill" onclick="showDay(3)">D4 · 6 Jun</div>
+  <div class="day-pill" onclick="showDay(4)">D5 · 7 Jun</div>
+  <div class="day-pill" onclick="showDay(5)">D6 · 8 Jun</div>
+  <div class="day-pill" onclick="showDay(6)">D7 · 9 Jun</div>
+</div>
+
+<!-- DAYS CONTENT -->
+<div id="days-container"></div>
+
+<div class="footer">Hecho con ❤ para Mamá &amp; yo · <span>Ámsterdam 2026</span></div>
+
+<script>
+const IG_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>`;
+const MAPS_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>`;
+const BOOK_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>`;
+const PLANE_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 00-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>`;
+
+const UNSPLASH = {
+  canal:        'https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=600&q=80',
+  rijksmuseum:  'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&q=80',
+  vangogh:      'https://images.unsplash.com/photo-1578926375605-eaf7559b1458?w=600&q=80',
+  bikes:        'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+  jordaan:      'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=600&q=80',
+  market:       'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=600&q=80',
+  food:         'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',
+  coffee:       'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80',
+  rotterdam:    'https://images.unsplash.com/photo-1567959491519-a492f1d4c63c?w=600&q=80',
+  denhaag:      'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=600&q=80',
+  wine:         'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80',
+  bakery:       'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=80',
+  museumplein:  'https://images.unsplash.com/photo-1565967511849-76a60a516170?w=600&q=80',
+  scheveningen: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&q=80',
+  pizza:        'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&q=80',
+  windmill:     'https://images.unsplash.com/photo-1534293507944-e7905af72543?w=600&q=80',
+  train:        'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=600&q=80',
+  architecture: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=600&q=80',
+  flowers:      'https://images.unsplash.com/photo-1490750967868-88df5691cc1e?w=600&q=80',
+  stedelijk:    'https://images.unsplash.com/photo-1578926375605-eaf7559b1458?w=600&q=80',
+};
+
+const mapsUrl = q => `https://www.google.com/maps/search/${encodeURIComponent(q)}`;
+
+const days = [
+  // ── DÍA 1 ──────────────────────────────────────────────────────────────────
+  {
+    num: 'Día 1', date: 'Lunes 25 Mayo 2026',
+    title: 'Llegada', subtitle: 'Primer contacto con los canales',
+    neighborhoods: ['Centrum','Nieuwmarkt','Jordaan'],
+    stops: [
+      { emoji:'✈️', type:'vuelo', name:'Vuelo AM0025 CDMX → AMS', barrio:'Aeromexico', img: UNSPLASH.canal,
+        what:'Sale 24 Mayo CDMX, llega 25 Mayo Schiphol. Tren Schiphol→Centraal: 17 min, cada 10 min, €5.40. Pagar con tarjeta contactless en el torniquete.',
+        fact:'El tren de Schiphol al centro sale del piso -1 del aeropuerto — directo a Centraal sin transbordo.',
+        ig:'https://www.instagram.com/aeromexico/', igHandle:'@aeromexico',
+        maps: mapsUrl('Amsterdam Schiphol Airport') },
+      { emoji:'🏨', type:'hotel', name:'Kimpton De Witt — Check-in', barrio:'Centrum / Singel', img: UNSPLASH.canal,
+        what:'Pedir habitación con vista al canal si hay disponibilidad. Dejar maletas y salir a caminar.',
+        fact:'El edificio data de 1884 — fue sede del Nederlandsche Bank. Kimpton preservó la fachada ornamental original.',
+        ig:'https://www.instagram.com/kimptondewittt/', igHandle:'@kimptondewittt',
+        maps: mapsUrl('Kimpton De Witt Amsterdam') },
+      { emoji:'🚶', type:'paseo', name:'Dam Square & Palacio Real', barrio:'Centrum', img: UNSPLASH.canal,
+        what:'Solo exterior esta noche. Mira las tallas del frontón del Palacio — la figura de Atlas cargando el globo es icónica. Camina hacia Zeedijk.',
+        fact:'Dam Square está sobre la presa original del río Amstel construida ~1270 — el acto fundacional literal de Ámsterdam.',
+        ig:'https://www.instagram.com/iamsterdam/', igHandle:'@iamsterdam',
+        maps: mapsUrl('Dam Square Amsterdam') },
+      { emoji:'🍷', type:'pitstop', name:'PITSTOP — In \'t Aepjen', barrio:'Nieuwmarkt / Zeedijk', img: UNSPLASH.wine,
+        what:'Genever (ginebra holandesa) solo o cerveza local. Siéntate afuera en Zeedijk. Abre todos los días.',
+        fact:'Data de 1544 — uno de los dos únicos edificios de madera que quedan en Ámsterdam. Los marineros pagaban con monos traídos del trópico.',
+        ig:'https://www.instagram.com/intaepjen/', igHandle:'@intaepjen',
+        maps: mapsUrl("In 't Aepjen Amsterdam Zeedijk 1") },
+      { emoji:'⛵', type:'tour', name:'Captain Dave Canal Cruise', barrio:'Canales Centrum', img: UNSPLASH.canal,
+        what:'Siéntate en la proa. Pide al capitán que señale el Golden Bend. Máx 12 personas.',
+        fact:'#2 de 561 actividades outdoor en Ámsterdam (Tripadvisor 2025). De noche los canales están en silencio y las casas brillan con luz cálida.',
+        ig:'https://www.instagram.com/captaindaveamsterdam/', igHandle:'@captaindaveamsterdam',
+        maps: mapsUrl('Amsterdam Central Canal'), reserve: 'Reservar: captaindaveamsterdam.com ⚠️ Máx 12 personas',
+        bookUrl: 'https://captaindaveamsterdam.com' },
+      { emoji:'🍽️', type:'cena', name:'Cena — Toscanini', barrio:'Jordaan', img: UNSPLASH.food,
+        what:'Burrata + tagliatelle hecho a mano. EN LISTA DE ESPERA — confirmar. Backup: No Nonsense (Geldersekade 5).',
+        fact:'Institución del Jordaan desde 1982. El chef hace el mercado en Albert Cuyp cada mañana. 40 años sin cambiar.',
+        ig:'https://www.instagram.com/toscaninirestaurant/', igHandle:'@toscaninirestaurant',
+        maps: mapsUrl('Toscanini Amsterdam Lindengracht 75'), reserve: '⚠️ En lista de espera' },
+    ]
+  },
+
+  // ── DÍA 2 ──────────────────────────────────────────────────────────────────
+  {
+    num: 'Día 2', date: 'Martes 26 Mayo 2026',
+    title: 'Van Gogh · Bici · Nine Streets', subtitle: 'Museos y barrios ocultos',
+    neighborhoods: ['Grachtengordel','Museumkwartier','Jordaan','De 9 Straatjes'],
+    stops: [
+      { emoji:'☕', type:'desayuno', name:'Eggs Benaddicted', barrio:'Grachtengordel / Prinsengracht', img: UNSPLASH.coffee,
+        what:'Eggs Benedict signature — la holandesa es real. Variaciones estacionales recomendadas. Canal Prinsengracht justo afuera.',
+        fact:'Café dedicado exclusivamente a los huevos benedictinos frente a uno de los canales más bellos de Ámsterdam.',
+        ig:'https://www.instagram.com/eggsbenaddicted/', igHandle:'@eggsbenaddicted',
+        maps: mapsUrl('Eggs Benaddicted Prinsengracht 474 Amsterdam') },
+      { emoji:'🎨', type:'museo', name:'Van Gogh Museum', barrio:'Museumkwartier', img: UNSPLASH.vangogh,
+        what:'Enfócate en estampas japonesas junto a sus pinturas. Galería de cartas en piso superior — no te la saltes. Comprar entrada con hora en vangoghmuseum.nl',
+        fact:'Van Gogh vendió solo una pintura en vida. Sus 820 cartas a Theo son el autorretrato emocional más completo de cualquier artista en la historia.',
+        ig:'https://www.instagram.com/vangoghmuseum/', igHandle:'@vangoghmuseum',
+        maps: mapsUrl('Van Gogh Museum Amsterdam'), reserve: '⚠️ OBLIGATORIO comprar entrada con fecha y hora en vangoghmuseum.nl',
+        bookUrl: 'https://www.vangoghmuseum.nl/en/visit/tickets' },
+      { emoji:'🚲', type:'tour', name:'Bike Tour — Hidden Gems', barrio:'Jordaan + Vondelpark + Oost', img: UNSPLASH.bikes,
+        what:'3 horas. Jordaan / hofjes ocultos / Vondelpark. Máx 12 personas. Pregunta al guía sus terrazas favoritas.',
+        fact:'Guías nacidos en Ámsterdam. La ruta pasa por hofjes — patios interiores secretos del s.XVII que la mayoría de visitantes nunca encuentran.',
+        ig:'https://www.instagram.com/iamsterdam/', igHandle:'@iamsterdam',
+        maps: mapsUrl('Dam Square Amsterdam'), reserve: 'Reservar en GetYourGuide',
+        bookUrl: 'https://www.getyourguide.com/amsterdam-l36/3-hour-local-bike-tour-of-amsterdam-s-hidden-gems-t46799/' },
+      { emoji:'🛍️', type:'tienda', name:'Nine Streets — Diseño & Paseo', barrio:'De 9 Straatjes', img: UNSPLASH.jordaan,
+        what:'Frozen Fountain (Prinsengracht 645 — diseño). Mendo (Berenstraat 11 — libros arte/arq). Boekie Woekie (Berenstraat 16 — libros de artistas únicos).',
+        fact:'Las 9 calles transversales entre los 3 canales forman el vecindario del s.XVII más intacto de Ámsterdam. Cada edificio es patrimonio protegido.',
+        ig:'https://www.instagram.com/de9straatjes/', igHandle:'@de9straatjes',
+        maps: mapsUrl('De 9 Straatjes Amsterdam') },
+      { emoji:'🍷', type:'pitstop', name:'PITSTOP — Bar Parry', barrio:'Jordaan', img: UNSPLASH.wine,
+        what:'Walk-in — sin reservas. Vino por copa + tabla charcutería Abraham Kef. Abre Mar–Dom desde las 16h. A una calle de Balthazar\'s.',
+        fact:'Bar hermano de Balthazar\'s Keuken. Los vinos vienen de Wijnwinkel en las 9 Straatjes — puedes comprar botella y pagar solo el descorche (€22.50).',
+        ig:'https://www.instagram.com/bar_parry/', igHandle:'@bar_parry',
+        maps: mapsUrl('Bar Parry Amsterdam Eerste Looiersdwarsstraat') },
+      { emoji:'🍽️', type:'cena', name:'Cena — Balthazar\'s Keuken ⭐', barrio:'Jordaan', img: UNSPLASH.food,
+        what:'Sin menú — comes lo que llega. 5 entrantes + elección fish o meat. ~€32–38pp. Abre Mié–Dom 18h.',
+        fact:'Desde 1995 en un antiguo taller de herrero. Pionero del menú fijo rotativo semanal en Holanda. Goop lo llamó uno de sus favoritos en el mundo.',
+        ig:'https://www.instagram.com/balthazarskeuken/', igHandle:'@balthazarskeuken',
+        maps: mapsUrl('Balthazar Keuken Amsterdam Elandsgracht 108'),
+        reserve: '⚠️ RESERVAR YA — solo 30 cubiertos. Abre Mié–Dom',
+        bookUrl: 'https://balthazarskeuken.nl' },
+    ]
+  },
+
+  // ── DÍA 3 ──────────────────────────────────────────────────────────────────
+  {
+    num: 'Día 3', date: 'Miércoles 27 Mayo 2026',
+    title: 'Última mañana & Vuelo', subtitle: 'Jordaan tranquilo → AMS→BCN→Menorca',
+    neighborhoods: ['Jordaan','Centrum / Singel','De 9 Straatjes'],
+    stops: [
+      { emoji:'☕', type:'desayuno', name:'Saint-Jean Bakery', barrio:'Jordaan · Lindengracht 158', img: UNSPLASH.bakery,
+        what:'El pistachio cruffin es obligatorio — llega antes de las 9am, se acaban. Kouign amann o danish estacional. Café de especialidad. Abre todos los días 8h–17h.',
+        fact:'Bakery 100% plant-based en el Jordaan. Pasteles tan buenos que los amsterdammers hacen cola encantados. Interior en edificio patrimonial del s.XVII.',
+        ig:'https://www.instagram.com/saintjeanbakery/', igHandle:'@saintjeanbakery',
+        maps: mapsUrl('Saint-Jean Bakery Lindengracht 158 Amsterdam') },
+      { emoji:'🏠', type:'arquitectura', name:'Dancing Houses — Singel Norte', barrio:'Centrum / Singel', img: UNSPLASH.canal,
+        what:'Busca el grupo de casas visiblemente inclinadas en distintas direcciones cerca del Brouwersgracht. Parada de fotos — 5 minutos.',
+        fact:'Construidas sobre pilotes en suelo turboso. En 400 años el suelo se mueve. Además fueron construidas intencionalmente inclinadas hacia adelante para izar muebles.',
+        ig:'https://www.instagram.com/iamsterdam/', igHandle:'@iamsterdam',
+        maps: mapsUrl('Singel 2-6 Amsterdam dancing houses') },
+      { emoji:'🌸', type:'paseo', name:'Bloemenmarkt & Singel Walk', barrio:'Grachtengordel / Singel', img: UNSPLASH.flowers,
+        what:'Pasea los puestos flotantes de flores. No compres bulbos aquí. Solo absorbe el color y la rareza. Abre todos los días.',
+        fact:'El único mercado flotante de flores del mundo. Barcazas amarradas permanentemente al Singel desde los años 1860.',
+        ig:'https://www.instagram.com/bloemenmarktamsterdam/', igHandle:'@bloemenmarktamsterdam',
+        maps: mapsUrl('Bloemenmarkt Amsterdam Singel') },
+      { emoji:'📚', type:'tienda', name:'Mendo + Boekie Woekie', barrio:'De 9 Straatjes', img: UNSPLASH.jordaan,
+        what:'Mendo (Berenstraat 11): libros de arte/arquitectura seleccionados a mano. Boekie Woekie (Berenstraat 16): libros de artistas únicos — el mejor souvenir sin ser turístico.',
+        fact:'Mendo fue fundado por dos diseñadores amsterdammers y es una de las mejores librerías de diseño de Europa.',
+        ig:'https://www.instagram.com/mendobookstore/', igHandle:'@mendobookstore',
+        maps: mapsUrl('Mendo bookstore Berenstraat 11 Amsterdam') },
+      { emoji:'🫙', type:'pitstop', name:'PITSTOP — Caldi e Freddi', barrio:'Centrum / Spuistraat 102', img: UNSPLASH.food,
+        what:'Menos de €5 por un panino. Pide lo caliente — porchetta o mozzarella e prosciutto. Come de pie en el canal. Abre todos los días. Perfecto antes del aeropuerto.',
+        fact:'Micro mostrador italiano en el centro de Ámsterdam. €4.50 te transporta a Roma. Italianos que se niegan a comprometer los ingredientes.',
+        ig:'https://www.instagram.com/caldiefreddi/', igHandle:'@caldiefreddi',
+        maps: mapsUrl('Caldi e Freddi Spuistraat 102 Amsterdam') },
+      { emoji:'🍽️', type:'cena', name:'Pre-vuelo — No Nonsense Restobar', barrio:'Centrum / Nieuwmarkt', img: UNSPLASH.food,
+        what:'Sopa del día + principal. Walk-in friendly. 5 min de Centraal Station. Abre todos los días.',
+        fact:'Comida honesta a precios honestos en un edificio histórico de canal — una rareza a esta distancia del centro turístico.',
+        ig:'https://www.instagram.com/restobar.nononsense/', igHandle:'@restobar.nononsense',
+        maps: mapsUrl('No Nonsense Restobar Geldersekade 5 Amsterdam') },
+    ]
+  },
+
+  // ── DÍA 4 ──────────────────────────────────────────────────────────────────
+  {
+    num: 'Día 4', date: 'Sábado 6 Junio 2026',
+    title: 'Regreso a Ámsterdam', subtitle: 'Vuelo KL1270 CPH → AMS · Tivoli Doelen',
+    neighborhoods: ['Oud-Zuid','Amstel / Weesperbuurt','Grachtengordel','De Pijp','Amsterdam West'],
+    stops: [
+      { emoji:'✈️', type:'vuelo', name:'Vuelo KL1270 CPH → AMS', barrio:'KLM', img: UNSPLASH.canal,
+        what:'Sale Copenhague 6 Jun, llega Schiphol. Tren Schiphol→Centraal: 17 min. Tivoli Doelen: 10 min caminando de Centraal.',
+        fact:'KLM es la aerolínea más antigua del mundo aún operando bajo su nombre original — fundada en 1919.',
+        ig:'https://www.instagram.com/klm/', igHandle:'@klm',
+        maps: mapsUrl('Amsterdam Airport Schiphol') },
+      { emoji:'🏨', type:'hotel', name:'Tivoli Doelen — Check-in', barrio:'Grachtengordel / Amstel', img: UNSPLASH.canal,
+        what:'Pedir habitación con vista al río Amstel. Hotel elegante y tranquilo — diferente al Kimpton.',
+        fact:'El Tivoli Doelen abrió en 1817. Rembrandt tenía estudio a dos calles. Frente al Muziektheater — la ópera de Ámsterdam.',
+        ig:'https://www.instagram.com/tivolidoelen/', igHandle:'@tivolidoelen',
+        maps: mapsUrl('Tivoli Doelen Amsterdam Nieuwe Doelenstraat 24') },
+      { emoji:'☕', type:'desayuno', name:'Café Garçon', barrio:'Oud-Zuid · Van Baerlestraat 26', img: UNSPLASH.coffee,
+        what:'Croque madame o tortilla francesa con fines herbes. Croissants bien laminados. Abre sábado desde las 8h. A 10 min caminando del Rijksmuseum.',
+        fact:'Café Garçon está convirtiendo su esquina de Oud-Zuid en un pequeño arrondissement parisino. Interior contemporáneo-clásico impresionante.',
+        ig:'https://www.instagram.com/cafegarcon.ams/', igHandle:'@cafegarcon.ams',
+        maps: mapsUrl('Café Garçon Van Baerlestraat 26 Amsterdam') },
+      { emoji:'🚶', type:'paseo', name:'Amstel & Magere Brug', barrio:'Amstel / Weesperbuurt', img: UNSPLASH.canal,
+        what:'Camina al sur por el Amstel. Cruza el Magere Brug. Observa si lo levantan para barcos — un espectáculo.',
+        fact:'El Magere Brug (Puente Flaco) fue construido ~1670. Uno de los tres únicos puentes levadizos de madera que quedan en Ámsterdam. Operación manual.',
+        ig:'https://www.instagram.com/iamsterdam/', igHandle:'@iamsterdam',
+        maps: mapsUrl('Magere Brug Amsterdam') },
+      { emoji:'🛍️', type:'tienda', name:'Frozen Fountain + Golden Bend', barrio:'De 9 Straatjes / Herengracht', img: UNSPLASH.jordaan,
+        what:'Frozen Fountain (Prinsengracht 645): diseño contemporáneo. Abre sáb. Golden Bend (Herengracht 390–420): las casas más ornamentadas de Ámsterdam.',
+        fact:'Frozen Fountain lleva desde 1985 siendo la galería de diseño contemporáneo líder de Ámsterdam. Muchas piezas son ediciones limitadas.',
+        ig:'https://www.instagram.com/thefrozenfountain/', igHandle:'@thefrozenfountain',
+        maps: mapsUrl('Frozen Fountain Prinsengracht 645 Amsterdam') },
+      { emoji:'🍷', type:'pitstop', name:'PITSTOP — La Dilettante', barrio:'De Pijp', img: UNSPLASH.wine,
+        what:'Walk-in — sin reservas. Copa de vino natural de lista rotativa. Verificar horario en su IG antes de ir.',
+        fact:'Uno de los mejores wine bars de vino natural de Ámsterdam. Cada botella es de pequeños productores europeos independientes.',
+        ig:'https://www.instagram.com/ladilettante.amsterdam/', igHandle:'@ladilettante.amsterdam',
+        maps: mapsUrl('La Dilettante Amsterdam Ferdinand Bolstraat') },
+      { emoji:'🍽️', type:'cena', name:'Cena — Peps', barrio:'Amsterdam West / Bilderdijkstraat 158H', img: UNSPLASH.food,
+        what:'Tapas españolas para compartir. Excelente carta de vinos españoles. Abre diario desde las 16h. Llegar antes de las 17:30. Sin reservas.',
+        fact:'Joya de barrio en Amsterdam West que los locales mantienen casi en secreto. Bilderdijkstraat es donde vive el Amsterdam West real.',
+        ig:'https://www.instagram.com/peps.amsterdam/', igHandle:'@peps.amsterdam',
+        maps: mapsUrl('Peps Amsterdam Bilderdijkstraat 158H') },
+    ]
+  },
+
+  // ── DÍA 5 ──────────────────────────────────────────────────────────────────
+  {
+    num: 'Día 5', date: 'Domingo 7 Junio 2026',
+    title: 'Día de Tren', subtitle: 'Rotterdam (arq.) ó Den Haag (arte + playa)',
+    neighborhoods: ['Rotterdam: Centrum / Katendrecht','Den Haag: Centrum / Scheveningen'],
+    stops: [
+      { emoji:'🚆', type:'tren', name:'OPCIÓN A — Rotterdam', barrio:'Intercity Direct NS ~40 min', img: UNSPLASH.rotterdam,
+        what:'Amsterdam Centraal → Rotterdam Centraal. ~40 min. Cada 15 min. Primera salida ~6:20h. ~€17 ida. Regreso sugerido: tren ~19:30 desde Rotterdam.',
+        fact:'Rotterdam fue casi completamente destruida en el bombardeo alemán del 14 mayo 1940. La reconstrucción se convirtió en un experimento arquitectónico de 70 años.',
+        ig:'https://www.instagram.com/rotterdam/', igHandle:'@rotterdam',
+        maps: mapsUrl('Amsterdam Centraal Station'), bookUrl: 'https://www.ns.nl/en' },
+      { emoji:'🚆', type:'tren', name:'OPCIÓN B — Den Haag', barrio:'Intercity NS ~50 min', img: UNSPLASH.denhaag,
+        what:'Amsterdam Centraal → Den Haag Centraal. ~50 min. Cada 10–15 min. 76 trenes/día. ~€15 ida. Regreso sugerido: tren ~19:30 desde Den Haag.',
+        fact:'Den Haag es sede del Tribunal Internacional de Justicia y del gobierno holandés — la ciudad más diplomática del mundo a 50 min en tren.',
+        ig:'https://www.instagram.com/denhaag/', igHandle:'@denhaag',
+        maps: mapsUrl('Amsterdam Centraal Station'), bookUrl: 'https://www.ns.nl/en' },
+      { emoji:'🏛️', type:'museo', name:'ROTTERDAM — Depot Boijmans ⭐', barrio:'Museumpark Rotterdam', img: UNSPLASH.architecture,
+        what:'Reservar entrada en depotboijmans.nl. Terraza panorámica con vistas. Restauradores trabajando en estudios abiertos. Abre domingo.',
+        fact:'El primer depósito de arte públicamente accesible del mundo. 151.000 obras normalmente ocultas. Inaugurado 2021. La fachada espejada refleja el Museumpark.',
+        ig:'https://www.instagram.com/depotboijmans/', igHandle:'@depotboijmans',
+        maps: mapsUrl('Depot Boijmans Van Beuningen Rotterdam'), reserve: 'Reservar entrada en depotboijmans.nl',
+        bookUrl: 'https://www.depotboijmans.nl/en/tickets' },
+      { emoji:'🏠', type:'arquitectura', name:'ROTTERDAM — Cube Houses + Markthal', barrio:'Centrum Rotterdam', img: UNSPLASH.rotterdam,
+        what:'Cube Houses: show house €3 entrada. Markthal: mural techo 11.000m² + almuerzo (queso/ostra/stroopwafel). Markthal abre domingo.',
+        fact:'El mural "Cornucopia" del Markthal es la obra de arte más grande de los Países Bajos. Los 228 apartamentos encima tienen ventanas de cocina con vista directa al mercado.',
+        ig:'https://www.instagram.com/markthalrotterdam/', igHandle:'@markthalrotterdam',
+        maps: mapsUrl('Markthal Rotterdam') },
+      { emoji:'🍺', type:'pitstop', name:'PITSTOP ROTTERDAM — Fenix Food Factory', barrio:'Katendrecht Rotterdam', img: UNSPLASH.wine,
+        what:'Cerveza artesanal de Kaapse Brouwers (dentro del edificio). Terraza frente al agua. Abre domingo.',
+        fact:'Almacén WWII en Katendrecht — antes barrio de marineros. La transformación de zona roja a hub creativo tardó menos de 10 años.',
+        ig:'https://www.instagram.com/fenixfoodfactory/', igHandle:'@fenixfoodfactory',
+        maps: mapsUrl('Fenix Food Factory Rotterdam Veerlaan 19D') },
+      { emoji:'🎨', type:'museo', name:'DEN HAAG — Mauritshuis ⭐', barrio:'Centrum Den Haag', img: UNSPLASH.denhaag,
+        what:'Reservar en mauritshuis.nl. "Chica con Arete de Perla" de Vermeer está aquí hasta agosto 2026. 2–3 horas. Abre domingo.',
+        fact:'El Mauritshuis cierra para renovaciones después del 23 agosto 2026 — si van en junio, el cuadro estará ahí. Después va a Japón.',
+        ig:'https://www.instagram.com/mauritshuis/', igHandle:'@mauritshuis',
+        maps: mapsUrl('Mauritshuis Den Haag'), reserve: 'Reservar en mauritshuis.nl',
+        bookUrl: 'https://www.mauritshuis.nl/en/visit/tickets/' },
+      { emoji:'🏖️', type:'paseo', name:'DEN HAAG — Scheveningen', barrio:'Scheveningen / North Sea', img: UNSPLASH.scheveningen,
+        what:'Tram 1 o 11 desde Centrum (15 min). Paseo por el boulevard del Mar del Norte. Terraza con vista al mar. En junio el tiempo suele ser bueno.',
+        fact:'Scheveningen es el resort de playa más visitado del Benelux. La playa mide kilómetros. El pier se adentra en el Mar del Norte con noria y restaurantes sobre el agua.',
+        ig:'https://www.instagram.com/scheveningen/', igHandle:'@scheveningen',
+        maps: mapsUrl('Scheveningen Beach Den Haag') },
+      { emoji:'🍷', type:'pitstop', name:'PITSTOP REGRESO — Café Cenc', barrio:'Grachtengordel / Vijzelgracht 5', img: UNSPLASH.wine,
+        what:'Parada al regresar a Ámsterdam. Vino / botana / soft ice cream con aceite de oliva. Abre domingo desde las 12h.',
+        fact:'Mismo equipo que Balthazar\'s Keuken y Bar Parry. Múltiples rincones íntimos en el edificio. Terrace si el sol acompaña.',
+        ig:'https://www.instagram.com/cafecenc/', igHandle:'@cafecenc',
+        maps: mapsUrl('Cafe Cenc Amsterdam Vijzelgracht 5') },
+      { emoji:'🍽️', type:'cena', name:'Cena — Moeders ⭐', barrio:'Jordaan · Rozengracht 251', img: UNSPLASH.food,
+        what:'Stamppot o costillas "moeder". Menú 3 platos precio fijo. LLEVAR FOTO DE TU MAMÁ — la añaden a las paredes. Reservar en moeders.com.',
+        fact:'Abierto 1990. Cada pared está cubierta de fotos de madres de clientes — miles de ellas. La vajilla desparejada la trajeron los invitados la noche de inauguración.',
+        ig:'https://www.instagram.com/restaurantmoeders/', igHandle:'@restaurantmoeders',
+        maps: mapsUrl('Moeders Amsterdam Rozengracht 251'), reserve: 'Reservar en moeders.com',
+        bookUrl: 'https://www.moeders.com' },
+    ]
+  },
+
+  // ── DÍA 6 ──────────────────────────────────────────────────────────────────
+  {
+    num: 'Día 6', date: 'Lunes 8 Junio 2026',
+    title: 'Rijksmuseum · Rijsel', subtitle: 'Arte · Oud-Zuid · Vondelpark · Amsterdam Oost',
+    neighborhoods: ['Jordaan','Museumkwartier','Oud-Zuid','Vondelpark','Amsterdam Oost'],
+    stops: [
+      { emoji:'☕', type:'desayuno', name:'Leauf', barrio:'Jordaan · Tweede Goudsbloemdwarsstraat 26', img: UNSPLASH.bakery,
+        what:'Leauf de Boeuf (steak + trufa) o Leauf Japanois. Sin asientos — comer en el canal. Abre lunes. Llegar temprano, el pan se acaba.',
+        fact:'4.9 en Google. Chef con formación Michelin haciendo sándwiches. Pan fermentado 24h. Menú cambia mensualmente.',
+        ig:'https://www.instagram.com/leaufamsterdam/', igHandle:'@leaufamsterdam',
+        maps: mapsUrl('Leauf Amsterdam Tweede Goudsbloemdwarsstraat 26') },
+      { emoji:'🎨', type:'museo', name:'Rijksmuseum — Tour Guiado ⭐', barrio:'Museumkwartier', img: UNSPLASH.rijksmuseum,
+        what:'Pedir al guía: simbolismo en "La Lechera" de Vermeer. Por qué Rembrandt murió en la pobreza. Para qué se pintó La Ronda de Noche. 2h. Skip-the-line. Máx 12.',
+        fact:'La "Ronda de Noche" fue recortada por los cuatro lados en 1715 para caber por una puerta. Solo conocemos la composición original por una pequeña copia previa.',
+        ig:'https://www.instagram.com/rijksmuseum/', igHandle:'@rijksmuseum',
+        maps: mapsUrl('Rijksmuseum Amsterdam'), reserve: '⚠️ Reservar tour guiado en GetYourGuide con skip-the-line',
+        bookUrl: 'https://www.getyourguide.com/rijksmuseum-l2696/amsterdamn-rijksmuseum-guided-tour-and-skip-the-line-ticket-t298415/' },
+      { emoji:'🚶', type:'paseo', name:'Oud-Zuid — Paseo de barrio', barrio:'Oud-Zuid', img: UNSPLASH.architecture,
+        what:'Camina las calles residenciales de Oud-Zuid. Arquitectura Escuela de Ámsterdam en Van Baerlestraat y Cornelis Schuytstraat.',
+        fact:'La Escuela de Ámsterdam (1910–1930) es única en el mundo — fachadas de ladrillo curvadas y decoración orgánica. No tiene equivalente en otro país.',
+        ig:'https://www.instagram.com/iamsterdam/', igHandle:'@iamsterdam',
+        maps: mapsUrl('Van Baerlestraat Amsterdam Oud-Zuid') },
+      { emoji:'🌿', type:'paseo', name:'Vondelpark + Groot Melkhuis', barrio:'Vondelpark', img: UNSPLASH.jordaan,
+        what:'Paseo por el Vondelpark. Terraza del Groot Melkhuis dentro del parque o cualquier silla en el césped. Abre lunes.',
+        fact:'El Vondelpark es el parque más visitado de los Países Bajos — 10 millones de personas al año. En verano hay conciertos gratuitos en el teatro al aire libre.',
+        ig:'https://www.instagram.com/vondelpark/', igHandle:'@vondelpark',
+        maps: mapsUrl('Vondelpark Amsterdam Groot Melkhuis') },
+      { emoji:'🍷', type:'pitstop', name:'PITSTOP — Café de Tuin', barrio:'Jordaan · Tweede Tuindwarsstraat 13', img: UNSPLASH.wine,
+        what:'Cerveza de barril o jenever. Terraza del Jordaan. Clientela completamente local. Abre lunes desde las 10h.',
+        fact:'Uno de los cafés marrones más auténticos del Jordaan. El barman sabe el pedido de cada regular sin preguntar.',
+        ig:'https://www.instagram.com/cafedetuin/', igHandle:'@cafedetuin',
+        maps: mapsUrl('Café de Tuin Amsterdam Tweede Tuindwarsstraat 13') },
+      { emoji:'🍽️', type:'cena', name:'Cena — Rijsel ⭐', barrio:'Amsterdam Oost · Marcusstraat 52B', img: UNSPLASH.food,
+        what:'Terrina o croquetas. Pollo de campo asado o turbot — los dos platos estrella. Menú 3 platos ~€35pp. Abre lunes desde las 18h. Ir en tram desde Tivoli.',
+        fact:'Abierto 2012 en una ex-escuela de cocina doméstica. Chef Iwan cocina en cocina abierta. Michelin Bib Gourmand. El local más querido de Oost por más de 10 años.',
+        ig:'https://www.instagram.com/caferijsel/', igHandle:'@caferijsel',
+        maps: mapsUrl('Rijsel Amsterdam Marcusstraat 52B'), reserve: '⚠️ Reservar en rijsel.com — depósito €35pp. Abre Lun–Vie',
+        bookUrl: 'https://rijsel.com/en/reservations' },
+    ]
+  },
+
+  // ── DÍA 7 ──────────────────────────────────────────────────────────────────
+  {
+    num: 'Día 7', date: 'Martes 9 Junio 2026',
+    title: 'Día Final & Vuelo a CDMX', subtitle: 'Stedelijk · Molino · Cena de despedida',
+    neighborhoods: ['Jordaan','Museumkwartier','Amsterdam Oost','Amsterdam West'],
+    stops: [
+      { emoji:'☕', type:'desayuno', name:'Café de Tuin', barrio:'Jordaan · Tweede Tuindwarsstraat 13', img: UNSPLASH.coffee,
+        what:'Desayuno tranquilo en el café más holandés del Jordaan. Huevos o menú del día. Abre martes desde las 10h.',
+        fact:'El martes el Jordaan pertenece a sus residentes. Sin turistas. El tipo de mañana que se recuerda.',
+        ig:'https://www.instagram.com/cafedetuin/', igHandle:'@cafedetuin',
+        maps: mapsUrl('Café de Tuin Amsterdam Tweede Tuindwarsstraat 13') },
+      { emoji:'🏺', type:'museo', name:'Stedelijk Museum', barrio:'Museumkwartier', img: UNSPLASH.stedelijk,
+        what:'Colección permanente: Mondrian / Kandinsky / De Stijl. Colección de diseño en piso inferior — no te la saltes. Comprar entrada en stedelijk.nl. Abre martes.',
+        fact:'Mayor colección de Mondrian del mundo. Desarrolló su estilo de cuadrículas en Ámsterdam en los 1910. La extensión "bañera" (2012) dividió a los amsterdammers.',
+        ig:'https://www.instagram.com/stedelijkmuseum/', igHandle:'@stedelijkmuseum',
+        maps: mapsUrl('Stedelijk Museum Amsterdam'), bookUrl: 'https://www.stedelijk.nl/en/visit/tickets' },
+      { emoji:'🛍️', type:'tienda', name:'Prinsengracht + Westerstraat Walk', barrio:'Jordaan Este', img: UNSPLASH.jordaan,
+        what:'Westerstraat hacia el este: tiendas vintage / diseño / galerías pequeñas. Pausa en cualquier terraza frente al Prinsengracht.',
+        fact:'El Jordaan era barrio obrero en el s.XVII — artesanos / tintoreros / curtidores. La transformación al barrio más cotizado de Ámsterdam tomó 400 años.',
+        ig:'https://www.instagram.com/iamsterdam/', igHandle:'@iamsterdam',
+        maps: mapsUrl('Westerstraat Amsterdam Jordaan') },
+      { emoji:'🍺', type:'pitstop', name:'PITSTOP — Brouwerij \'t IJ (Molino)', barrio:'Amsterdam Oost · Funenkade 7', img: UNSPLASH.windmill,
+        what:'Zatte (tripel — la firma) o Columbus IPA. Terraza exterior. Verificar horario en su IG (normalmente 12h–20h en martes). El molino está en funcionamiento.',
+        fact:'La cervecería más famosa de Ámsterdam opera dentro de un molino de madera funcional de 1814. La combinación molino + cervecería es espectacularmente holandesa.',
+        ig:'https://www.instagram.com/brouwerijhetij/', igHandle:'@brouwerijhetij',
+        maps: mapsUrl("Brouwerij 't IJ Amsterdam Funenkade 7") },
+      { emoji:'🍽️', type:'cena', name:'Cena Final — Pazzi ⭐', barrio:'Amsterdam West · Jan Evertsenstraat 126', img: UNSPLASH.pizza,
+        what:'Burrata para empezar. Pizza: funghi trifolati o nduja. LLEGAR ANTES DE LAS 18:30. Sin reservas — hacen cola.',
+        fact:'La masa fermenta 48h. Tomates San Marzano de Campania. Sin delivery. Sin reservas. Los residentes de Amsterdam West la consideran su secreto de barrio.',
+        ig:'https://www.instagram.com/pazzipizzaams/', igHandle:'@pazzipizzaams',
+        maps: mapsUrl('Pazzi Pizza Amsterdam Jan Evertsenstraat 126') },
+      { emoji:'✈️', type:'vuelo', name:'Vuelo AM0026 AMS → CDMX', barrio:'Aeromexico — Schiphol', img: UNSPLASH.canal,
+        what:'Verificar hora exacta en aeromexico.com. Llegar a Schiphol 3h antes. Tren Centraal→Schiphol: 17 min.',
+        fact:'El vuelo AMS–CDMX de Aeromexico es el único vuelo directo entre México y los Países Bajos — las dos capitales sin escala.',
+        ig:'https://www.instagram.com/aeromexico/', igHandle:'@aeromexico',
+        maps: mapsUrl('Amsterdam Airport Schiphol') },
+    ]
+  },
+];
+
+const resvMaster = [
+  { text:'Captain Dave Canal Cruise (D1)', url:'https://captaindaveamsterdam.com', warn:'Máx 12 personas — se llena rápido' },
+  { text:'Toscanini (D1) — en lista de espera', url:'https://ristorantetoscanini.nl', warn:'Confirmar disponibilidad' },
+  { text:'Van Gogh Museum — entrada con hora (D2)', url:'https://www.vangoghmuseum.nl/en/visit/tickets', warn:'OBLIGATORIO comprar por adelantado' },
+  { text:"Balthazar's Keuken (D2)", url:'https://balthazarskeuken.nl', warn:'Solo 30 cubiertos · Abre Mié–Dom' },
+  { text:'Tren AMS → Rotterdam o Den Haag (D5)', url:'https://www.ns.nl/en', warn:'Comprar la noche anterior' },
+  { text:'Depot Boijmans (D5 Rotterdam)', url:'https://www.depotboijmans.nl/en/tickets', warn:'Entrada con hora — abre Dom ✅' },
+  { text:'Mauritshuis (D5 Den Haag)', url:'https://www.mauritshuis.nl/en/visit/tickets/', warn:'Cuadro aquí hasta agosto 2026' },
+  { text:'Moeders — cena D5', url:'https://www.moeders.com', warn:'Reservar con varios días anticipación' },
+  { text:'Rijksmuseum tour guiado (D6)', url:'https://www.getyourguide.com/rijksmuseum-l2696/amsterdamn-rijksmuseum-guided-tour-and-skip-the-line-ticket-t298415/', warn:'Skip-the-line · Máx 12 personas' },
+  { text:'Rijsel (D6)', url:'https://rijsel.com/en/reservations', warn:'Depósito €35pp · Abre Lun–Vie 18h' },
+];
+
+function buildReservations() {
+  const saved = JSON.parse(localStorage.getItem('resv_done') || '{}');
+  const container = document.getElementById('resv-list');
+  container.innerHTML = resvMaster.map((r, i) => `
+    <div class="resv-item">
+      <div class="resv-check ${saved[i] ? 'done' : ''}" onclick="toggleResv(${i})" title="Marcar como hecho">${saved[i] ? '✓' : ''}</div>
+      <div class="resv-text">
+        ${r.text}
+        <span class="warn"> — ${r.warn}</span>
+        <a class="resv-link" href="${r.url}" target="_blank">🔗 ${r.url.replace('https://','')}</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleResv(i) {
+  const saved = JSON.parse(localStorage.getItem('resv_done') || '{}');
+  saved[i] = !saved[i];
+  localStorage.setItem('resv_done', JSON.stringify(saved));
+  buildReservations();
+}
+
+function badgeClass(type) {
+  const map = { desayuno:'type-desayuno', cena:'type-cena', pitstop:'type-pitstop',
+    tour:'type-tour', tienda:'type-tienda', arquitectura:'type-arquitectura',
+    paseo:'type-paseo', museo:'type-museo', vuelo:'type-vuelo', tren:'type-tren',
+    hotel:'type-hotel', info:'type-info' };
+  return map[type] || 'type-info';
+}
+
+function badgeLabel(type) {
+  const map = { desayuno:'☕ Desayuno', cena:'🍽️ Cena', pitstop:'🍷 Pitstop',
+    tour:'🚲 Tour', tienda:'🛍️ Tiendas', arquitectura:'🏛️ Arquitectura',
+    paseo:'🚶 Paseo', museo:'🎨 Museo', vuelo:'✈️ Vuelo', tren:'🚆 Tren',
+    hotel:'🏨 Hotel', info:'ℹ️ Info' };
+  return map[type] || type;
+}
+
+function buildDays() {
+  const container = document.getElementById('days-container');
+  container.innerHTML = days.map((day, di) => `
+    <div class="day-section ${di === 0 ? 'visible' : ''}" id="day-${di}">
+      <div class="day-header">
+        <div class="day-num">${day.num} · ${day.date}</div>
+        <div class="day-title">${day.title}</div>
+        <div class="day-subtitle">${day.subtitle}</div>
+        <div class="day-neighborhoods">
+          ${day.neighborhoods.map(n => `<span class="nbhd-tag">${n}</span>`).join('')}
+        </div>
+      </div>
+      ${day.stops.map(stop => `
+        <div class="stop-card">
+          <img class="stop-img" src="${stop.img}" alt="${stop.name}" loading="lazy" onerror="this.style.display='none'">
+          <div class="stop-body">
+            <div class="stop-type-row">
+              <span class="stop-type-badge ${badgeClass(stop.type)}">${badgeLabel(stop.type)}</span>
+            </div>
+            <div class="stop-name">${stop.name}</div>
+            <div class="stop-barrio">${stop.barrio}</div>
+            ${stop.reserve ? `<div class="reserve-alert"><b>📌</b> <span>${stop.reserve}</span></div>` : ''}
+            <div class="stop-what">${stop.what}</div>
+            <div class="stop-fact">${stop.fact}</div>
+            <div class="stop-links">
+              ${stop.ig ? `<a class="stop-link ig" href="${stop.ig}" target="_blank">${IG_ICON} ${stop.igHandle || 'Instagram'}</a>` : ''}
+              ${stop.maps ? `<a class="stop-link maps" href="${stop.maps}" target="_blank">${MAPS_ICON} Google Maps</a>` : ''}
+              ${stop.bookUrl ? `<a class="stop-link book" href="${stop.bookUrl}" target="_blank">${BOOK_ICON} Reservar</a>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function showDay(idx) {
+  document.querySelectorAll('.day-section').forEach(s => s.classList.remove('visible'));
+  document.querySelectorAll('.day-pill').forEach(p => p.classList.remove('active'));
+  document.getElementById(`day-${idx}`).classList.add('visible');
+  document.querySelectorAll('.day-pill')[idx].classList.add('active');
+  window.scrollTo({ top: document.getElementById('dayNav').offsetTop - 10, behavior: 'smooth' });
+}
+
+buildReservations();
+buildDays();
+</script>
+</body>
+</html>
